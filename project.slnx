@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MyStack/MyStackProj.csproj" Id="04996ae0-1b4b-482c-bb74-5cd620b4e45a" />
+  <Project Path="project/LinkedListProj.csproj" />
+</Solution>
