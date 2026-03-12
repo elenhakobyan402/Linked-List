@@ -1,4 +1,9 @@
 <Solution>
+  <Project Path="BinaryTreeProj/BinaryTreeProj.csproj" Id="828fe730-06c1-4336-bd2a-335ed2764de9" />
+  <Project Path="MyQueueProj/MyQueueProj.csproj" Id="a1750dd5-b425-45ec-8690-4c83f4a60311" />
   <Project Path="MyStack/MyStackProj.csproj" Id="04996ae0-1b4b-482c-bb74-5cd620b4e45a" />
+  <Project Path="MyStackArray/MyStackArrayProj.csproj" Id="657f6013-f53c-4609-9676-7a525624b0d3" />
+  <Project Path="Nodes/NodesProj.csproj" Id="cfcacc3d-e3de-4ad5-b5bf-fec5ceaa3df3" />
+  <Project Path="PostFixProj/PostfixProj.csproj" Id="96c9044d-2122-48a2-8121-b984b9d88f15" />
   <Project Path="project/LinkedListProj.csproj" />
 </Solution>
