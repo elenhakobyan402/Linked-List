@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using Nodes;
 
 
-Node first = new Node(2);
+Node first = new Node(5);
 Node second = new Node(3);
 Node third = new Node(4);
 Node fourth = new Node(-5);
