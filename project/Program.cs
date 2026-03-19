@@ -8,7 +8,7 @@ public class Program
         #region LinkedList
         var LinkedList = new MyLinkedList<string>();
 
-        LinkedList.AddFirst("k");
+        LinkedList.AddFirst("A");
         LinkedList.AddFirst("B");
         LinkedList.AddFirst("C");
         LinkedList.AddFirst("D");
