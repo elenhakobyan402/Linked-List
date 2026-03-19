@@ -38,7 +38,7 @@ public class MyLinkedList<T> : ICollection<T>
 
         while (current != null)
         {
-            if (current.Value.Equals( item))
+            if (current.Value.Equals(item))
                 return true;
 
             current = current.Next;
@@ -77,7 +77,7 @@ public class MyLinkedList<T> : ICollection<T>
         }
     }
 
-    
+
     #endregion ICollection
     #region Add
 
@@ -88,7 +88,7 @@ public class MyLinkedList<T> : ICollection<T>
         if (Head == null)
         {
 
-            Head  = newNode;
+            Head = newNode;
             Tail = newNode;
         }
         else
@@ -99,7 +99,7 @@ public class MyLinkedList<T> : ICollection<T>
         Count++;
     }
 
-    
+
 
     public void AddLast(T value)
     {
@@ -120,19 +120,58 @@ public class MyLinkedList<T> : ICollection<T>
 
     #endregion Add
     #region Remove
-    public void RemoveFirst()
+    public T RemoveFirst(T item)
     {
-        if (Head == null)
-            throw new InvalidOperationException("List is empty");
-
-        Head = Head.Next;
-
-        if (Head == null)
-            Tail = null;
-
-        Count--;
+        return RemoveFirst(new MyLinkedListNode<T>(item));
     }
 
+    private T RemoveFirst(MyLinkedListNode<T> node)
+    {
+        MyLinkedListNode<T> temp = Head;
+        Head = Head.Next;
+        Count--;
+        return temp.Value;
+    }
 
+    public T RemoveLast(T item)
+    {
+        return RemoveLast(new MyLinkedListNode<T>(item));
+    }
+    private T RemoveLast(MyLinkedListNode<T> node)
+    {
+        if (Count == 0)
+            throw new InvalidOperationException("List is empty");
+
+        if (Count ==1)
+            {
+                var temp = Tail;
+                Tail = null;
+                Head = null;
+                Count--;
+                return temp.Value;
+            }
+            else
+            {
+                var current = Head;
+                while (current.Next != Tail)
+                {
+                    current = current.Next;
+                }
+                var temp = Tail;
+                Tail = current;
+                Tail.Next = null;
+                Count--;
+                return temp.Value;
+            }
+        
+
+    }
+
+    public int RemoveFirst()
+    {
+        throw new NotImplementedException();
+    }
 }
+
+
     #endregion Remove
