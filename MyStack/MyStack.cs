@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace MyStackProj
 {
+
     public class MyStack<T> : IEnumerable<T>
     {
         public MyLinkedList<T> MyStackItems = new MyLinkedList<T>();
@@ -27,8 +28,6 @@ namespace MyStackProj
         
         public T Pop()
         {
-            if (MyStackItems.Head == null)
-                throw new InvalidOperationException("Stack is empty");
 
             var itemToRemove = MyStackItems.Head.Value;
 
@@ -39,9 +38,6 @@ namespace MyStackProj
 
         public T Peek()
         {
-            if (MyStackItems.Head == null)
-                throw new InvalidOperationException("Stack is empty");
-
             return MyStackItems.Head.Value;
         }
         public IEnumerator<T> GetEnumerator()

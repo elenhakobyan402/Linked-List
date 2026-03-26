@@ -4,41 +4,51 @@ namespace MyQueueProj;
 
 public class MyQueue<T> : IEnumerable<T>
 {
-    MyLinkedList<T> q_items = new MyLinkedList<T>();
+    MyLinkedList<T> items = new MyLinkedList<T>();
 
     public void Enqueue(T item)
     {
-        q_items.AddLast(item);
+        items.AddLast(item);
     }
 
-    public int Dequeue()
+    public T Dequeue()
     {
-        return q_items.RemoveFirst();
+        if (items.Count == 0)
+        {             
+            throw new InvalidOperationException("The Queue is empty");
+        }
+        T value = items.Head.Value;
+        items.RemoveFirst();
+        return value;
     }
 
     public T Peek()
     {
-        return q_items.First();
+        if (items.Count == 0)
+        {
+            throw new InvalidOperationException("The Queue is empty ");
+        }
+            return items.Head.Value;
     }
 
-    public int Count()
+    public int Count
     {
-        return q_items.Count();
+        get {return items.Count;}
     }
 
 
     public void Clear()
     {
-         q_items.Clear(); 
+         items.Clear(); 
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return q_items.GetEnumerator();
+        return items.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return  q_items.GetEnumerator();
+        return  GetEnumerator();
     }
 }

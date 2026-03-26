@@ -10,7 +10,6 @@ namespace LinkedListProj;
 
 public class MyLinkedList<T> : ICollection<T>
 {
-    private T item;
 
     public MyLinkedListNode<T> Head { get; private set; }
     public MyLinkedListNode<T> Tail { get; private set; }
@@ -84,7 +83,7 @@ public class MyLinkedList<T> : ICollection<T>
 
     public void AddFirst(T value)
     {
-        var newNode = new MyLinkedListNode<T>(item);
+        var newNode = new MyLinkedListNode<T>(value);
         if (Head == null)
         {
 
@@ -103,7 +102,7 @@ public class MyLinkedList<T> : ICollection<T>
 
     public void AddLast(T value)
     {
-        var newNode = new MyLinkedListNode<T>(item);
+        var newNode = new MyLinkedListNode<T>(value);
         if (Tail == null)
         {
 
@@ -120,58 +119,47 @@ public class MyLinkedList<T> : ICollection<T>
 
     #endregion Add
     #region Remove
-    public T RemoveFirst(T item)
-    {
-        return RemoveFirst(new MyLinkedListNode<T>(item));
-    }
 
-    private T RemoveFirst(MyLinkedListNode<T> node)
+
+    public void RemoveFirst()
     {
-        MyLinkedListNode<T> temp = Head;
+        if (Head == null)
+            throw new InvalidOperationException("Cannot remove from empty list");
         Head = Head.Next;
         Count--;
-        return temp.Value;
+        if (Count == 0)
+            Tail = null;
     }
 
-    public T RemoveLast(T item)
-    {
-        return RemoveLast(new MyLinkedListNode<T>(item));
-    }
-    private T RemoveLast(MyLinkedListNode<T> node)
+    public void RemoveLast()
     {
         if (Count == 0)
             throw new InvalidOperationException("List is empty");
 
-        if (Count ==1)
-            {
-                var temp = Tail;
-                Tail = null;
-                Head = null;
-                Count--;
-                return temp.Value;
-            }
-            else
-            {
-                var current = Head;
-                while (current.Next != Tail)
-                {
-                    current = current.Next;
-                }
-                var temp = Tail;
-                Tail = current;
-                Tail.Next = null;
-                Count--;
-                return temp.Value;
-            }
-        
+        if (Count == 1)
+        {
+            Head = null;
+            Tail = null;
+        }
+        else
+        {
+            MyLinkedListNode<T> current = Head;
 
-    }
+            while (current.Next != Tail)
+            {
+                current = current.Next;
+            }
 
-    public int RemoveFirst()
-    {
-        throw new NotImplementedException();
+            current.Next = null;
+            Tail = current;
+
+        }
+            Count--;
     }
+    #endregion Remove
+
+
+
 }
 
 
-    #endregion Remove

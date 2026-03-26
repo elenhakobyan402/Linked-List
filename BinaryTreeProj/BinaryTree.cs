@@ -7,158 +7,150 @@ public class BinaryTree<T>: IEnumerable<T>
 
 
 {
-    private BinaryTreeNode<T>? _head;
-    private int _count;
+    private BinaryTreeNode<T>? Root { get; set; }
+    private int Count;
 
     #region Add
 
     public void Add(T value)
     {
-        BinaryTreeNode<T> newNode = new BinaryTreeNode<T>(value);
-
-        if (_head == null)
-        {
-            _head = newNode;
-            _count++;
-            return;
-        }
-
-        BinaryTreeNode<T> current = _head;
-
-        while (true)
-        {
-            int result = value.CompareTo(current.Value);
-
-            if (result < 0)
-            {
-                if (current.Left == null)
-                {
-                    current.Left = newNode;
-                    break;
-                }
-                current = current.Left;
-            }
-
-            else
-            {
-                if (current.Right == null)
-                {
-                    current.Right = newNode;
-                    break;
-                }
-                current = current.Right;
-            }
-        }
-
-        _count++;
+        Root = Add(Root, value);
+        Count++;
     }
 
+    private BinaryTreeNode<T> Add(BinaryTreeNode<T> node, T value)
+    {
+        if (node == null)
+            return new BinaryTreeNode<T>(value);
+
+        if (value.CompareTo(node.Value) < 0)
+            node.Left = Add(node.Left, value);
+        else if (value.CompareTo(node.Value) > 0)
+            node.Right = Add(node.Right, value);
+
+        return node;
+    }
 
     #endregion Add
 
     #region Remove
-    public bool Remove(T value)
+    public void Remove(T value)
     {
-        BinaryTreeNode<T> current = _head;
-        BinaryTreeNode<T> parent = null;
+        Root = Remove(Root, value);
+    }
 
-        while (current != null)
-        {
-            int result = value.CompareTo(current.Value);
+    private BinaryTreeNode<T> Remove(BinaryTreeNode<T> node, T value)
+    {
+        if (node == null)
+            return null;
 
-            if (result == 0)
-                break;
+        int compare = value.CompareTo(node.Value);
 
-            parent = current;
-
-            if (result < 0)
-                current = current.Left;
-            else
-                current = current.Right;
-        }
-
-        if (current == null)
-            return false;
-
-        if (current.Left == null && current.Right == null)
-        {
-            if (parent == null)
-                _head = null;
-            else if (parent.Left == current)
-                parent.Left = null;
-            else
-                parent.Right = null;
-        }
-
-        else if (current.Left == null || current.Right == null)
-        {
-            BinaryTreeNode<T> child = current.Left ?? current.Right;
-
-            if (parent == null)
-                _head = child;
-            else if (parent.Left == current)
-                parent.Left = child;
-            else
-                parent.Right = child;
-        }
-
-
+        if (compare < 0)
+            node.Left = Remove(node.Left, value);
+        else if (compare > 0)
+            node.Right = Remove(node.Right, value);
         else
         {
-            BinaryTreeNode<T> successorParent = current;
-            BinaryTreeNode<T> successor = current.Right;
-
-            while (successor.Left != null)
+            if (node.Left == null && node.Right == null)
             {
-                successorParent = successor;
-                successor = successor.Left;
+                Count--;
+                return null;
             }
 
-            current.Value = successor.Value;
+            if (node.Left == null)
+            {
+                Count--;
+                return node.Right;
+            }
 
-            if (successorParent.Left == successor)
-                successorParent.Left = successor.Right;
-            else
-                successorParent.Right = successor.Right;
+            if (node.Right == null)
+            {
+                Count--;
+                return node.Left;
+            }
+
+            BinaryTreeNode<T> min = FindMin(node.Right);
+            node.Value = min.Value;
+            node.Right = Remove(node.Right, min.Value);
         }
 
-        _count--;
-        return true;
+        return node;
     }
+
+    private BinaryTreeNode<T> FindMin(BinaryTreeNode<T> node)
+    {
+        while (node.Left != null)
+            node = node.Left;
+        return node;
+    }
+
     #endregion Remove
 
 
-
-    // pre-order traversal
-    void Visit(BinaryTreeNode<T> current)
+    #region Traversals
+    public IEnumerable<T> InOrder()
     {
-        if (current == null)
-            return;
-        Process(current.Value);
-        Visit(current.Left);
-        Visit (current.Right);
-
-    } 
-    private void Process(T value)
-    {
-        Console.WriteLine(value);
+        return InOrder(Root);
     }
 
-    void Visit(BinaryTreeNode<T> current)
+    private IEnumerable<T> InOrder(BinaryTreeNode<T> node)
     {
-        if (current == null)
-            return;
+        if (node != null)
+        {
+            foreach (var v in InOrder(node.Left))
+                yield return v;
 
-        Visit(current.Left);
-        Process(current.Value);
-        Visit(current.Right);
+            yield return node.Value;
 
+            foreach (var v in InOrder(node.Right))
+                yield return v;
+        }
     }
-   
+
+    public IEnumerable<T> PreOrder()
+    {
+        return PreOrder(Root);
+    }
+
+    private IEnumerable<T> PreOrder(BinaryTreeNode<T> node)
+    {
+        if (node != null)
+        {
+            yield return node.Value;
+
+            foreach (var v in PreOrder(node.Left))
+                yield return v;
+
+            foreach (var v in PreOrder(node.Right))
+                yield return v;
+        }
+    }
+
+    public IEnumerable<T> PostOrder()
+    {
+        return PostOrder(Root);
+    }
+
+    private IEnumerable<T> PostOrder(BinaryTreeNode<T> node)
+    {
+        if (node != null)
+        {
+            foreach (var v in PostOrder(node.Left))
+                yield return v;
+
+            foreach (var v in PostOrder(node.Right))
+                yield return v;
+
+            yield return node.Value;
+        }
+    }
+
+    #endregion Traversals
 
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        return InOrder().GetEnumerator(); 
     }
 
     IEnumerator IEnumerable.GetEnumerator()
