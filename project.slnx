@@ -2,6 +2,8 @@
   <Project Path="BinaryTreeProj/BinaryTreeProj.csproj" Id="828fe730-06c1-4336-bd2a-335ed2764de9" />
   <Project Path="MyHashTableProj/MyHashTableProj.csproj" Id="89a15acb-3bee-42a3-9f3e-32d989b3c962" />
   <Project Path="MyQueueProj/MyQueueProj.csproj" Id="a1750dd5-b425-45ec-8690-4c83f4a60311" />
+  <Project Path="MySetProject/MySetProject.csproj" Id="4333d08b-c696-4422-a24a-e2f3bdedaa87" />
+  <Project Path="MySetWPF1/WpfSet.csproj" Id="b434f2ee-de0e-4e16-bebf-9baea0525aeb" />
   <Project Path="MyStack/MyStackProj.csproj" Id="04996ae0-1b4b-482c-bb74-5cd620b4e45a" />
   <Project Path="MyStackArray/MyStackArrayProj.csproj" Id="657f6013-f53c-4609-9676-7a525624b0d3" />
   <Project Path="Nodes/NodesProj.csproj" Id="cfcacc3d-e3de-4ad5-b5bf-fec5ceaa3df3" />
